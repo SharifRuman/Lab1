@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Login</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+
+		<script src="{{url_for('static', filename='main.js')}}"></script>
+	</head>
+	<body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <h5>Lord of the rings</h5>
+                            <h6>Auther: J. R. R. Tolkien</h6>
+                            <h6>Publishing year: 1954</h6>
+                            <h6>ISBN: 618640150</h6><br> <br> <br>
+                            <h5>Reviews:</h5>
+                            <div class="search-form">
+                                <form action="#" method="get">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Write your review" name="review" class="form-control input-lg">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-lg btn-primary" type="submit">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+        
+                            <div class="hr-line-dashed"></div>
+                            <div class="search-result">
+                                <h6>Username</h6>
+                                <p>This book is very good.</p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+	<script src="{{url_for('static', filename='bootstrap.bundle.min.js')}}"></script>
+
+	</body>
+</html>
