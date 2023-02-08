@@ -5,8 +5,6 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='search.css') }}">
 		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-
-		<script src="{{url_for('static', filename='main.js')}}"></script>
 	</head>
 	<body>
 		<form action="{{ url_for('search_result') }}" method="post" class="search-bar">
