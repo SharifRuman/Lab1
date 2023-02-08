@@ -6,9 +6,9 @@
 For this Lab 1 project I built a flask web application to search book and find details about books from postgres database.
 
 ##### Python Requirments: 
- Markup : 1. Flask
-          2. psycopg2
-          3. werkzeug
+1. Flask
+2. psycopg2
+3. werkzeug
 
 ##### Tables:
 
