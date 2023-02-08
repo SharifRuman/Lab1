@@ -1,11 +1,8 @@
-import os
 import re
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from flask_session import Session
 import psycopg2
 import psycopg2.extras
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import create_engine
 
 
 app = Flask(__name__)
