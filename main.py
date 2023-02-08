@@ -102,11 +102,56 @@ def home():
 
 @app.route('/search_result', methods=['GET', 'POST'])
 def search_result():
-    return render_template('search_result.html')
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
-@app.route('/book', methods=['GET', 'POST'])
-def book():
-    return render_template('book.html')
+        if request.method == 'POST' and 'search' in request.form:
+            search = request.form['search']
+            cursor.execute('SELECT * FROM books WHERE LOWER(isbn) = LOWER(%s) OR LOWER(title) = LOWER(%s) OR LOWER(author) = LOWER(%s) OR LOWER(year) = LOWER(%s) ', (search, search, search, search,))
+            books = cursor.fetchall()
+
+        return render_template('search_result.html', books=books, search=search)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/book/<book_isbn>', methods=['GET', 'POST'])
+def book(book_isbn):
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
+        isbn = str(book_isbn)
+        cursor.execute('SELECT * FROM books WHERE isbn = %s', (isbn,))
+        books = cursor.fetchone()
+
+        cursor.execute('SELECT * FROM reviews WHERE isbn = %s', (isbn,))
+        reviews = cursor.fetchall()
+
+        return render_template('book.html', books=books, reviews=reviews)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/review', methods=['GET', 'POST'])
+def review():
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+        if request.method == 'POST' and 'review' in request.form and 'isbn' in request.form:
+            review = request.form['review']
+            isbn = request.form['isbn']
+            
+            cursor.execute('SELECT username FROM users WHERE id = %s', [session['id']])
+            username = cursor.fetchone()
+
+            print(username[0])
+
+            cursor.execute("INSERT INTO reviews (username, review, isbn) VALUES (%s,%s,%s)", (username[0], review, isbn))
+            conn.commit()
+            flash('Thanks for your review')
+
+        return redirect(url_for('book', book_isbn = isbn))
+
+    else:
+        return redirect(url_for('login'))
 
 if __name__ == "__main__":
     app.run(debug=True)
