@@ -9,8 +9,8 @@
 		<script src="{{url_for('static', filename='main.js')}}"></script>
 	</head>
 	<body>
-		<form action="" class="search-bar">
-			<input type="search" name="search" pattern=".*\S.*" required>
+		<form action="{{ url_for('search_result') }}" method="post" class="search-bar">
+			<input type="search" name="search" pattern=".*\S.*" id="search" required>
 			<button class="search-btn" type="submit">
 				<span>Search</span>
 			</button>
