@@ -28,6 +28,13 @@ conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_
 # engine = create_engine(os.getenv("postgresql://postgres:12345@localhost/booksql"))
 # db = scoped_session(sessionmaker(bind=engine))
 
+@app.route('/', methods=['GET', 'POST'])
+def first():
+    if 'loggedin' in session:
+        return render_template('home.html')
+    else:
+        return redirect(url_for('login'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
