@@ -18,8 +18,10 @@ body, .search-bar {
 	display: flex;
 }
 body {
-	background:  #435165 !important;
 	height: 100vh;
+	background-image: linear-gradient(rgba(7, 83, 141, 0.666), rgba(7, 83, 141, 0.666)), url(books.jpg) !important;
+	background-size: cover;
+    background-position: center;
 }
 .search-bar input,
 .search-btn, 

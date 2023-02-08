@@ -7,7 +7,9 @@
 }
 
 body {
-    background-color: #435165 !important;
+    background-image: linear-gradient(rgba(7, 83, 141, 0.666), rgba(7, 83, 141, 0.666)), url(books.jpg) !important;
+	background-size: cover;
+    background-position: center;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -179,7 +181,13 @@ body.loggedin {
 .ibox-content {
     background-color: #b4f7cc;
     color: inherit;
-    padding: 15px 20px 20px 20px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 80em;
+    padding: 20px 20px 20px 20px;
     border-color: #abcade;
     border-image: none;
     border-style: solid solid none;
