@@ -130,7 +130,9 @@ def book(book_isbn):
         cursor.execute('SELECT * FROM reviews WHERE isbn = %s', (isbn,))
         reviews = cursor.fetchall()
 
-        return render_template('book.html', books=books, reviews=reviews)
+        cursor.execute('SELECT ROUND(AVG(rating),1) as rating FROM reviews WHERE isbn = %s', (isbn,))
+        rating = cursor.fetchone()
+        return render_template('book.html', books=books, reviews=reviews, rating=rating)
     else:
         return redirect(url_for('login'))
 
@@ -142,15 +144,21 @@ def review():
         if request.method == 'POST' and 'review' in request.form and 'isbn' in request.form:
             review = request.form['review']
             isbn = request.form['isbn']
+            rating = request.form['rate']
             
+            print(request.form)
             cursor.execute('SELECT username FROM users WHERE id = %s', [session['id']])
             username = cursor.fetchone()
 
-            print(username[0])
+            cursor.execute('SELECT * FROM reviews WHERE username = %s AND isbn = %s', (username[0], isbn))
+            account = cursor.fetchone()
 
-            cursor.execute("INSERT INTO reviews (username, review, isbn) VALUES (%s,%s,%s)", (username[0], review, isbn))
-            conn.commit()
-            flash('Thanks for your review')
+            if account:
+                flash('You already submited your review for this book')
+            else:
+                cursor.execute("INSERT INTO reviews (username, review, isbn, rating) VALUES (%s,%s,%s,%s)", (username[0], review, isbn, rating))
+                conn.commit()
+                flash('Thanks for your review')
 
         return redirect(url_for('book', book_isbn = isbn))
 
