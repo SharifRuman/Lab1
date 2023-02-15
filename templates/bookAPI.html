@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Login</title>
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+	</head>
+	<body>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox float-e-margins">
+                        <br>
+                        <div class="ibox-content">
+                            <h5>{{ books['title'] }}</h5>
+                            <h6>{{ books['author'] }}</h6>
+                            <h6>Publishing year: {{ books['published_date'] }}</h6>
+                            <h6>ISBN_10: {{ books['ISBN_10'] }}</h6>
+                            <h6>ISBN_13: {{ books['ISBN_13'] }}</h6>
+                            <h6>Rating: {{ books['average_rating'] }} out of 5 stars (Total {{ books['ratings_count'] }} review)</h6>
+                            <div class="search-form">
+                                <form action="{{ url_for('json') }}" method="post">
+                                    <div class="input-group">
+                                        <input type="hidden" placeholder="{{ isbn }}" name="isbn" id="isbn" value="{{ isbn }}" class="form-control input-lg">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-lg btn-secondary" type="submit">
+                                                JSON
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form> <br> <br>
+                            <h5>Reviews:</h5>
+                            <div class="search-form">
+                                <form action="{{ url_for('review') }}" method="post">
+                                    <div class="rate">
+                                        <input type="radio" id="star5" name="rate" value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" id="star4" name="rate" value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" name="rate" value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" name="rate" value="2" />
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" name="rate" value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+                                    <div class="input-group">
+                                        <input type="hidden" placeholder="{{ isbn }}" name="isbn" id="isbn" value="{{ isbn }}" class="form-control input-lg">
+                                        <input type="text" placeholder="Write your review" name="review" id="review" class="form-control input-lg">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-lg btn-primary" type="submit">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            
+                            <div class="hr-line-dashed"></div>
+                            {% for review in reviews %}
+                            <div class="search-result">
+                                <h6>{{ review['username'] }}</h6>
+                                <p>{{ review['review'] }}</p>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            {% endfor %}
+                            <br>
+                            <div class="input-group-btn">
+                            <a class="btn btn-lg btn-primary" href="{{ url_for('logout') }}" type="submit">
+                                Logout
+                            </a>
+                        </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+	<script src="{{url_for('static', filename='bootstrap.bundle.min.js')}}"></script>
+
+	</body>
+</html>
