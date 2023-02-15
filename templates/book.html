@@ -17,7 +17,7 @@
                             <h6>{{ books[2] }}</h6>
                             <h6>Publishing year: {{ books[3] }}</h6>
                             <h6>ISBN: {{ books[0] }}</h6>
-                            <h6>Rating: {{ rating[0] }} out of 5 stars</h6><br> <br> <br>
+                            <h6>Rating: {{ rating['0'] }} out of 5 stars (Total {{ ratingCount[0] }} review)</h6><br> <br> <br>
                             <h5>Reviews:</h5>
                             <div class="search-form">
                                 <form action="{{ url_for('review') }}" method="post">
