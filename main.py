@@ -201,8 +201,7 @@ def api(book_isbn):
 
             return render_template('bookAPI.html', books=books, reviews=reviews, isbn=isbn)
         else:
-            content = {"HTTP_404_NOT_FOUND please move along": 'nothing to see here'}
-            return content, status.HTTP_404_NOT_FOUND
+            return render_template('404.html')
     else:
         return redirect(url_for('login'))
 
@@ -232,8 +231,7 @@ def json():
                         'published_date': book_info['publishedDate'] if book_info['publishedDate'] else None
                     }]}
         else:
-            content = {"HTTP_404_NOT_FOUND please move along": 'nothing to see here'}
-            return content, status.HTTP_404_NOT_FOUND
+            return render_template('404.html')
     else:
         return redirect(url_for('login'))
 
