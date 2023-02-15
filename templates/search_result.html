@@ -29,7 +29,7 @@
                             <div class="hr-line-dashed"></div>
                             {% for book in books %}
                             <div class="search-result">
-                                <h2><a href="{{ url_for('book', book_isbn = book['isbn']) }}">{{ book['title'] }}</a></h2>
+                                <h2><a href="{{ url_for('api', book_isbn = book['isbn']) }}">{{ book['title'] }}</a></h2>
                                 <h6>by {{ book['author'] }}</h6>
                             </div>
                             <div class="hr-line-dashed"></div>
