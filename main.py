@@ -220,7 +220,6 @@ def json():
         if book:
             book_info = jsondata['items'][0]['volumeInfo']
             
-
             return {"books" : [{
                         'title': book_info['title'], 
                         'author': book_info['authors'][0],
