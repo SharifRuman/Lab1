@@ -1,4 +1,6 @@
-# Project 1 and 2
+# Project 1 and 2 
+
+**NOTICE:** I'm using same repo to publish LAb 1 and Lab 2 project.
 
 ### ENGO 651 - Adv. Topics on Geospatial Technologies
 
@@ -7,7 +9,6 @@ For this Lab 1 project I built a flask web application to search book and find d
 
 And for Lab 2 flask web application will search book and find details about books from Google book API.
 
-**NOTICE** I'm using same repo to publish LAb 1 and Lab 2 project.
 
 ##### Python Requirments: 
 1. Flask
