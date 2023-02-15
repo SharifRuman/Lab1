@@ -1,4 +1,6 @@
 import re
+import requests
+from flask_api import status
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 import psycopg2
 import psycopg2.extras
@@ -132,7 +134,12 @@ def book(book_isbn):
 
         cursor.execute('SELECT ROUND(AVG(rating),1) as rating FROM reviews WHERE isbn = %s', (isbn,))
         rating = cursor.fetchone()
-        return render_template('book.html', books=books, reviews=reviews, rating=rating)
+
+        cursor.execute('SELECT COUNT(rating) FROM reviews WHERE isbn = %s', (isbn,))
+        ratingCount = cursor.fetchone()
+        print(ratingCount)
+
+        return render_template('book.html', books=books, reviews=reviews, rating=rating, ratingCount=ratingCount)
     else:
         return redirect(url_for('login'))
 
@@ -160,8 +167,73 @@ def review():
                 conn.commit()
                 flash('Thanks for your review')
 
-        return redirect(url_for('book', book_isbn = isbn))
+        return redirect(url_for('api', book_isbn = isbn))
 
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/api/<book_isbn>', methods=['GET', 'POST'])
+def api(book_isbn):
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
+        isbn = str(book_isbn)
+        cursor.execute('SELECT * FROM books WHERE isbn = %s', (isbn,))
+        book = cursor.fetchone()
+
+        cursor.execute('SELECT * FROM reviews WHERE isbn = %s', (isbn,))
+        reviews = cursor.fetchall()
+
+        res = requests.get("https://www.googleapis.com/books/v1/volumes", params={"q": f"isbn:{isbn}"})
+        jsondata = res.json()
+
+        if book:
+            book_info = jsondata['items'][0]['volumeInfo']
+            books = {
+                        'title': book_info['title'], 
+                        'author': book_info['authors'][0],
+                        'ISBN_10': book_info['industryIdentifiers'][0]['identifier'],
+                        'ISBN_13': book_info['industryIdentifiers'][1]['identifier'],
+                        'average_rating': book_info['averageRating'] if book_info['averageRating'] else None,
+                        'ratings_count': book_info['ratingsCount'] if book_info['ratingsCount'] else None,
+                        'published_date': book_info['publishedDate'] if book_info['publishedDate'] else None
+                    }
+
+            return render_template('bookAPI.html', books=books, reviews=reviews, isbn=isbn)
+        else:
+            content = {"HTTP_404_NOT_FOUND please move along": 'nothing to see here'}
+            return content, status.HTTP_404_NOT_FOUND
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/json', methods=['GET', 'POST'])
+def json():
+    if 'loggedin' in session:
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+            
+        isbn = request.form['isbn']
+        cursor.execute('SELECT * FROM books WHERE isbn = %s', (isbn,))
+        book = cursor.fetchone()
+
+        res = requests.get("https://www.googleapis.com/books/v1/volumes", params={"q": f"isbn:{isbn}"})
+        jsondata = res.json()
+
+        if book:
+            book_info = jsondata['items'][0]['volumeInfo']
+            
+
+            return {"books" : [{
+                        'title': book_info['title'], 
+                        'author': book_info['authors'][0],
+                        'ISBN_10': book_info['industryIdentifiers'][0]['identifier'],
+                        'ISBN_13': book_info['industryIdentifiers'][1]['identifier'],
+                        'average_rating': book_info['averageRating'] if book_info['averageRating'] else None,
+                        'ratings_count': book_info['ratingsCount'] if book_info['ratingsCount'] else None,
+                        'published_date': book_info['publishedDate'] if book_info['publishedDate'] else None
+                    }]}
+        else:
+            content = {"HTTP_404_NOT_FOUND please move along": 'nothing to see here'}
+            return content, status.HTTP_404_NOT_FOUND
     else:
         return redirect(url_for('login'))
 
