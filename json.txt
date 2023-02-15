@@ -1,0 +1,38 @@
+{
+'kind': 'books#volumes',
+ 'totalItems': 1,
+ 'items': [
+	{'kind': 'books#volume',
+	 'id': '3Y1gQgAACAAJ', 
+	 'etag': 'PdHBpxf/FIU', 
+	 'selfLink': 'https://www.googleapis.com/books/v1/volumes/3Y1gQgAACAAJ',
+	 'volumeInfo': {
+	 'title': 'Lord Edgware Dies',
+	 'authors': ['Agatha Christie'],
+	 'publisher': 'HarperCollins',
+	 'publishedDate': '1977',
+	 'description': 'Another case involving Hercule Poirot and his little grey cells available on CD',
+	 'industryIdentifiers': [
+					{'type': 'ISBN_10',
+					 'identifier': '0002314576'},
+					 {'type': 'ISBN_13',
+					 'identifier': '9780002314572'}],
+	 'readingModes': {'text': False, 'image': False},
+	 'pageCount': 255,
+	 'printType': 'BOOK',
+	 'categories': ['Detective and mystery stories'],
+	 'averageRating': 3.5,
+	 'ratingsCount': 18,
+	 'maturityRating': 'NOT_MATURE',
+	 'allowAnonLogging': False,
+	 'contentVersion': 'preview-1.0.0',
+	 'imageLinks': {'smallThumbnail': 'http://books.google.com/books/content?id=3Y1gQgAACAAJ&printsec=frontcover&img=1&zoom=5&source=gbs_api', 'thumbnail': 'http://books.google.com/books/content?id=3Y1gQgAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api'},
+	 'language': 'en', 'previewLink': 'http://books.google.ca/books?id=3Y1gQgAACAAJ&dq=isbn:0002314576&hl=&cd=1&source=gbs_api',
+	 'infoLink': 'http://books.google.ca/books?id=3Y1gQgAACAAJ&dq=isbn:0002314576&hl=&source=gbs_api',
+	 'canonicalVolumeLink': 'https://books.google.com/books/about/Lord_Edgware_Dies.html?hl=&id=3Y1gQgAACAAJ'},
+	 'saleInfo': {'country': 'CA', 'saleability': 'NOT_FOR_SALE', 'isEbook': False},
+	 'accessInfo': {'country': 'CA', 'viewability': 'NO_PAGES', 'embeddable': False, 'publicDomain': False, 'textToSpeechPermission': 'ALLOWED', 'epub': {'isAvailable': False}, 'pdf': {'isAvailable': False}, 'webReaderLink': 'http://play.google.com/books/reader?id=3Y1gQgAACAAJ&hl=&source=gbs_api', 'accessViewStatus': 'NONE', 'quoteSharingAllowed': False},
+	 'searchInfo': {'textSnippet': 'Poirot had been present when Jane bragged of her plan to &#39;get rid&#39; of her estranged husband.'}
+	}
+	]
+}
